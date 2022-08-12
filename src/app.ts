@@ -25,10 +25,12 @@ const getData = async (page: number) => {
 
   let tab = "";
 
-  data.map((item: { row: number; gender: string; age: number }) => {
-    const { row, gender, age } = item;
+  console.log(data);
 
-    tab += `<tr data-entryid> 
+  data.map((item: { id: string; row: number; gender: string; age: number }) => {
+    const { id, row, gender, age } = item;
+
+    tab += `<tr data-entryid=${id}> 
     <td>${row}</td>
     <td>${gender.toUpperCase()}</td>
     <td>${age}</td>
