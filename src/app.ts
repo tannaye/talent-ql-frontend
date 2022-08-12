@@ -3,10 +3,19 @@ const url = "https://randomapi.com/api/8csrgnjw?key=LEIX-GF3O-AG7I-6J84";
 let data = [];
 let currentPage = 1;
 
-const getData = async (page) => {
+const updateHTML = (elmId: string, value: string) => {
+  var elem = document.getElementById(elmId);
+  if (typeof elem !== "undefined" && elem !== null) {
+    elem.innerHTML = value;
+  }
+};
+
+const getData = async (page: number) => {
   if (page === 1) {
+    // @ts-ignore
     document.getElementById("prev").disabled = true;
   } else {
+    // @ts-ignore
     document.getElementById("prev").disabled = false;
   }
 
@@ -16,9 +25,7 @@ const getData = async (page) => {
 
   let tab = "";
 
-  console.log(data);
-
-  data.map((item) => {
+  data.map((item: { row: number; gender: string; age: number }) => {
     const { row, gender, age } = item;
 
     tab += `<tr> 
@@ -28,13 +35,9 @@ const getData = async (page) => {
     </tr>`;
   });
 
-  document.getElementById("table-data").innerHTML = tab;
-  document.getElementById(
-    "page-number"
-  ).innerHTML = `Showing Page ${currentPage}`;
+  updateHTML("table-data", tab);
+  updateHTML("page-number", `Showing Page ${currentPage}`);
 };
-
-getData(currentPage);
 
 const nextPage = () => {
   currentPage++;
@@ -46,6 +49,8 @@ const prevPage = () => {
   getData(currentPage);
 };
 
-// const startApp = async () => {};
+const startApp = async () => {
+  getData(currentPage);
+};
 
-// document.addEventListener("DOMContentLoaded", startApp);
+document.addEventListener("DOMContentLoaded", startApp);
